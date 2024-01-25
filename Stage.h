@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include <vector>
 
 //テストシーンを管理するクラス
 class Stage : public GameObject
@@ -7,6 +8,8 @@ class Stage : public GameObject
 
 	int hFloor_;
 	int hWall_;
+
+	std::vector<std::vector<int>> map;
 
 public:
 	//コンストラクタ
