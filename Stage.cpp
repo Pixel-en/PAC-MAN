@@ -1,5 +1,7 @@
 #include "Stage.h"
 #include "Engine/Model.h"
+#include "Engine/Collider.h"
+#include "Engine/CsvReader.h"
 #include <string>
 #include <sstream>
 #include <filesystem>
@@ -10,6 +12,22 @@
 Stage::Stage(GameObject* parent)
 	:GameObject(parent,"Stage"),hFloor_(-1),hWall_(-1)
 {
+#if 0
+	CsvReader csv;
+	csv.Load("Map.csv");
+	int STAGE_X = csv.GetWidth();
+	int STAGE_Y = csv.GetHeight();
+
+	std::vector<std::vector<int>> stageData_(STAGE_Y, std::vector<int>(STAGE_X, 0));
+
+	for (int i = 0; i < STAGE_Y; i++) {
+		for (int j = 0; j < STAGE_X; j++) {
+			stageData_[i][j] = csv.GetValue(j, i);
+	
+		}
+	}
+#endif
+
 }
 
 void Stage::Initialize()
@@ -19,6 +37,8 @@ void Stage::Initialize()
 
 	hWall_ = Model::Load("Model\\Wall.fbx");
 	assert(hWall_ >= 0);
+
+#if 1
 
 	std::ifstream inputfile;
 	inputfile.open("Map.csv", std::ios::in);
@@ -46,9 +66,9 @@ void Stage::Initialize()
 		map.push_back(itmp);
 	}
 
-
 	inputfile.close();
 
+#endif
 }
 
 void Stage::Update()
@@ -57,28 +77,6 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-#if 0
-	for (int i = -7; i <= 7; i++) {
-		for (int j = -7; j <= 7; j++) {
-			//•Ç‚Ì•\Ž¦
-			if (i == -7 || i == 7 || j == -7 || j == 7) {
-				Transform wallTrans;
-				wallTrans.position_ = { (float)i,0,(float)j };
-				Model::SetTransform(hWall_, wallTrans);
-				Model::Draw(hWall_);
-			}
-			//°‚Ì•\Ž¦
-			else {
-				Transform floorTrans;
-				floorTrans.position_ = { (float)i,0,(float)j };
-				Model::SetTransform(hFloor_, floorTrans);
-				Model::Draw(hFloor_);
-			}
-		}
-	}
-#endif
-
-
 	for (int y = 0; y < map.size(); y++) {
 		for (int x = 0; x < map[y].size(); x++) {
 			Transform trans;
