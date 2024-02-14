@@ -6,39 +6,22 @@
 #include <sstream>
 #include <filesystem>
 #include <fstream>
+#include "Engine/Camera.h"
 
 
+
+bool Stage::IsWall(int _x, int _y)
+{
+	if (map[_y][_x] == STAGE_OBJ::WALL)
+		return true;
+	else
+		return false;
+}
 
 Stage::Stage(GameObject* parent)
 	:GameObject(parent,"Stage"),hFloor_(-1),hWall_(-1)
 {
 #if 0
-	CsvReader csv;
-	csv.Load("Map.csv");
-	int STAGE_X = csv.GetWidth();
-	int STAGE_Y = csv.GetHeight();
-
-	std::vector<std::vector<int>> stageData_(STAGE_Y, std::vector<int>(STAGE_X, 0));
-
-	for (int i = 0; i < STAGE_Y; i++) {
-		for (int j = 0; j < STAGE_X; j++) {
-			stageData_[i][j] = csv.GetValue(j, i);
-	
-		}
-	}
-#endif
-
-}
-
-void Stage::Initialize()
-{
-	hFloor_ = Model::Load("Model\\Floor.fbx");
-	assert(hFloor_ >= 0);
-
-	hWall_ = Model::Load("Model\\Wall.fbx");
-	assert(hWall_ >= 0);
-
-#if 1
 
 	std::ifstream inputfile;
 	inputfile.open("Map.csv", std::ios::in);
@@ -46,10 +29,10 @@ void Stage::Initialize()
 		exit(0);
 
 	std::string data;
-	
+
 	std::vector<std::string> temp;
 
-	while (std::getline(inputfile,data)) {
+	while (std::getline(inputfile, data)) {
 		temp.push_back(data);
 	}
 
@@ -68,7 +51,49 @@ void Stage::Initialize()
 
 	inputfile.close();
 
+	stageWidth_ = map[0].size();
+	stageHeight_ = map.size();
+
 #endif
+
+#if 1
+	CsvReader csv;
+	csv.Load("map.csv");
+
+
+	stageWidth_ = csv.GetWidth();
+	stageHeight_ = csv.GetHeight();
+
+
+	for (int i = 0; i < stageHeight_; i++)
+	{
+		std::vector<int> sdata(stageWidth_, 0);//stageWidth_å¬ÇÃîzóÒÇ0Ç≈èâä˙âª
+		map.push_back(sdata);
+	}
+
+
+	for (int j = 0; j < stageHeight_; j++)
+	{
+		for (int i = 0; i < stageWidth_; i++)
+		{
+			map[j][i] = csv.GetValue(i, j);
+		}
+	}
+
+#endif
+}
+
+void Stage::Initialize()
+{
+	hFloor_ = Model::Load("Model\\Floor.fbx");
+	assert(hFloor_ >= 0);
+
+	hWall_ = Model::Load("Model\\Wall.fbx");
+	assert(hWall_ >= 0);
+
+	Camera::SetPosition({ 6.5, 10, -5 });
+	Camera::SetTarget({ 6.5, 0, 5.5 });
+
 }
 
 void Stage::Update()
@@ -77,6 +102,7 @@ void Stage::Update()
 
 void Stage::Draw()
 {
+#if 0
 	for (int y = 0; y < map.size(); y++) {
 		for (int x = 0; x < map[y].size(); x++) {
 			Transform trans;
@@ -91,9 +117,39 @@ void Stage::Draw()
 			}
 		}
 	}
+#endif
 
+	Transform floorTrans;
+	floorTrans.position_ = { 0,0,0 };
+
+	for (int z = 0; z < stageHeight_; z++) {
+		for (int x = 0; x < stageWidth_; x++) {
+			floorTrans.position_ = { (float)x, 0, (float)(14 - z) };
+			//if (x == 0 || z == 0 || x == 14 || z == 14) {
+			//	Model::SetTransform(hBlock_, floorTrans);
+			//	Model::Draw(hBlock_);
+			//}
+			//else {
+			//	Model::SetTransform(hFloor_, floorTrans);
+			//	Model::Draw(hFloor_);
+			//}
+			if (map[z][x] == 1) {
+				Model::SetTransform(hWall_, floorTrans);
+				Model::Draw(hWall_);
+			}
+			else {
+				Model::SetTransform(hFloor_, floorTrans);
+				Model::Draw(hFloor_);
+			}
+		}
+	}
 }
 
 void Stage::Release()
 {
+	for (int i = 0; i < stageHeight_; i++)
+	{
+		map[i].clear();
+	}
+	map.clear();
 }

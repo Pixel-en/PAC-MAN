@@ -1,10 +1,24 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Gauge.h"
+
+class Stage;
 
 class Player : public GameObject
 {
 
     int hModel_;
+    float speed_;
+    Stage* pStage_;
+
+    int hpCrr_;
+    int hpMax_;
+
+    Gauge* pGauge_;
+
+    float rottmp_;
+
+
 
 public:
     //コンストラクタ
