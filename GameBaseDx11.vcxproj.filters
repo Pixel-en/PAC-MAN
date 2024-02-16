@@ -105,10 +105,20 @@
     <ClCompile Include="Stage.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="TestObject.cpp" />
-    <ClCompile Include="Gauge.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Gauge.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -187,10 +197,21 @@
     <ClInclude Include="Stage.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="TestObject.h" />
-    <ClInclude Include="Gauge.h" />
-    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -205,5 +226,10 @@
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameBaseDx11.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

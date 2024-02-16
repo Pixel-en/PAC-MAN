@@ -1,29 +1,23 @@
 #pragma once
 #include "Engine/GameObject.h"
-#include "Gauge.h"
 
 class Stage;
 
-class Player : public GameObject
+class Enemy : public GameObject
 {
-
     int hModel_;
     float speed_;
     Stage* pStage_;
 
-    int hpCrr_;
-    int hpMax_;
-
-    Gauge* pGauge_;
-
-
+    int movedir;
+    int framecnt;
 
 public:
     //コンストラクタ
-    Player(GameObject* parent);
+    Enemy(GameObject* parent);
 
     //デストラクタ
-    ~Player();
+    ~Enemy();
 
     //初期化
     void Initialize() override;
@@ -36,6 +30,4 @@ public:
 
     //開放
     void Release() override;
-
-    void OnCollision(GameObject* pTarget) override;
 };

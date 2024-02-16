@@ -3,6 +3,8 @@
 #include "Engine/Input.h"
 #include "Engine/Debug.h"
 #include "Stage.h"
+#include "Engine/SceneManager.h"
+#include "Engine/SphereCollider.h"
 
 namespace {
 	const float PLAYER_SPEED{ 0.1f };
@@ -25,7 +27,9 @@ void Player::Initialize()
 	transform_.position_.x = 0.5;
 	transform_.position_.z = 1.5;
 	pStage_ = (Stage*)FindObject("Stage");
-	rottmp_ = 0.0;
+
+	SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0.3, 0), 0.3f);
+	AddCollider(collision);
 }
 
 void Player::Update()
@@ -97,8 +101,6 @@ void Player::Update()
 	//Debug::Log(" : ");
 	//Debug::Log(pStage_->IsWall(tx, ty), true);
 
-	rottmp_ += 10.0;
-
 	//XMMATRIX tmp;
 	//tmp = XMMatrixRotationY(XMConvertToDegrees(rottmp_));
 	//move = XMVector3TransformCoord(move, tmp);
@@ -140,6 +142,11 @@ void Player::Update()
 
 		transform_.rotate_.y = XMConvertToDegrees(angle);
 	}
+
+	if (hpCrr_ <= 0) {
+		SceneManager* s = (SceneManager*)FindObject("SceneManager");
+		s->ChangeScene(SCENE_ID_GAMEOVER);
+	}
 }
 
 void Player::Draw()
@@ -150,4 +157,12 @@ void Player::Draw()
 
 void Player::Release()
 {
+}
+
+void Player::OnCollision(GameObject* pTarget)
+{
+	if (pTarget->GetObjectName() == "Enemy")
+	{
+		hpCrr_ = 0;
+	}
 }
