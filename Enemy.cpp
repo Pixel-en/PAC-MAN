@@ -3,9 +3,10 @@
 #include "Stage.h"
 #include "Engine/Debug.h"
 #include "Engine/SphereCollider.h"
+#include "Player.h"
 
 Enemy::Enemy(GameObject* parent)
-	:GameObject(parent, "Enemy"), hModel_(-1), speed_(0.12f), pStage_(nullptr),framecnt(0)
+	:GameObject(parent, "Enemy"), hModel_(-1), speed_(0.10f), pStage_(nullptr)
 {
 }
 
@@ -15,15 +16,23 @@ Enemy::~Enemy()
 
 void Enemy::Initialize()
 {
-	hModel_ = Model::Load("Model\\Enemy.fbx");
+  	hModel_ = Model::Load("Model\\Enemy.fbx");
 	assert(hModel_ >= 0);
 
 
 	transform_.position_.x = 5;
 	transform_.position_.z = 5;
 
-	movedir = rand() % 4;
+	//movedir = rand() % 4;
 	pStage_ = (Stage*)FindObject("Stage");
+
+	pPlayer_ = (Player*)FindObject("Player");
+
+	isside_ = false;
+	ismove_ = false;
+
+	framecnt_ = 0;
+	movesave_ = 0;
 
 	SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0.3, 0), 0.3f);
 	AddCollider(collision);
@@ -31,7 +40,6 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
-	framecnt++;
 
 	XMVECTOR vFront = { 0, 0, 1, 0 };
 	XMVECTOR move{ 0, 0, 0, 0 };
@@ -39,10 +47,57 @@ void Enemy::Update()
 	float bufferX = 0;
 	float bufferZ = 0;
 
+	XMFLOAT3 Ppos = pPlayer_->GetPosition();
+	float xdis = GetPosition().x - Ppos.x;
+	float zdis = GetPosition().z - Ppos.z;
+
+	Debug::Log("xdis=");
+	Debug::Log(xdis, TRUE);
+	Debug::Log("zdis=");
+	Debug::Log(zdis, TRUE);
+
+	int movedir = -1;
+
 	enum Dir
 	{
 		up, left, down, right
 	};
+
+	if (!ismove_) {
+		if (isside_) {
+			if (fabs(xdis) > 0.05) {
+				if (xdis > 0)
+					movedir = Dir::left;
+				else if (xdis < 0)
+					movedir = Dir::right;
+			}
+			else
+				isside_ = false;
+		}
+		else {
+			if (fabs(zdis) > 0.05) {
+				if (zdis > 0)
+					movedir = Dir::down;
+				else if (zdis < 0)
+					movedir = Dir::up;
+			}
+			else
+				isside_ = true;
+		}
+	}
+	else {
+		framecnt_++;
+		movedir = movesave_;
+		if (framecnt_ > 60)
+			ismove_ = false;
+	}
+
+	//if (movedir == -1) {
+	//	framecnt_ = 0;
+	//	movesave_ = rand() % 4;
+	//	ismove_ = true;
+	//}
+
 
 	switch (movedir)
 	{
@@ -100,12 +155,8 @@ void Enemy::Update()
 	{
 		pos = posTmp;
 	}
-	else
-		movedir = rand() % 4;
-
-	if (framecnt > 350) {
-		framecnt = 0;
-		movedir = rand() % 4;
+	else {
+		isside_ = !isside_;
 	}
 
 	Debug::Log(movedir,TRUE);
