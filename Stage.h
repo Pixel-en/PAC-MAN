@@ -16,6 +16,8 @@ class Stage : public GameObject
 	int stageWidth_, stageHeight_;
 	std::vector<std::vector<int>> map;
 
+	int floorval_;
+
 public:
 
 	int GetStageWidth() { return stageWidth_;}
@@ -37,4 +39,7 @@ public:
 
 	//ŠJ•ú
 	void Release() override;
+
+	int GetFloorValue();
+	bool IsFloor(int _x, int _y);
 };

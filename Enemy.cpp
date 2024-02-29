@@ -51,10 +51,10 @@ void Enemy::Update()
 	float xdis = GetPosition().x - Ppos.x;
 	float zdis = GetPosition().z - Ppos.z;
 
-	Debug::Log("xdis=");
-	Debug::Log(xdis, TRUE);
-	Debug::Log("zdis=");
-	Debug::Log(zdis, TRUE);
+	//Debug::Log("xdis=");
+	//Debug::Log(xdis, TRUE);
+	//Debug::Log("zdis=");
+	//Debug::Log(zdis, TRUE);
 
 	int movedir = -1;
 
@@ -158,7 +158,7 @@ void Enemy::Update()
 		isside_ = !isside_;
 	}
 
-	Debug::Log(movedir,TRUE);
+	/*Debug::Log(movedir,TRUE);*/
 
 	//Debug::Log("(X,Z)=");
 	//Debug::Log(XMVectorGetX(pos));

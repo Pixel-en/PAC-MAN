@@ -106,7 +106,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="TestObject.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="TitleScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -119,6 +118,13 @@
     <ClCompile Include="GameOverScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Cookie.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameClearScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -199,7 +205,6 @@
     </ClInclude>
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -212,6 +217,13 @@
     <ClInclude Include="GameOverScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Cookie.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClearScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

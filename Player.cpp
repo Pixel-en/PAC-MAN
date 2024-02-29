@@ -109,12 +109,12 @@ void Player::Update()
 	if (!XMVector3Equal(move, XMVectorZero())) {
 		XMStoreFloat3(&(transform_.position_), pos);
 		
-		Debug::Log("X=");
-		Debug::Log(XMVectorGetX(move),true);
-		Debug::Log("Y=");
-		Debug::Log(XMVectorGetY(move), true);
-		Debug::Log("Z=");
-		Debug::Log(XMVectorGetZ(move), true);
+		//Debug::Log("X=");
+		//Debug::Log(XMVectorGetX(move),true);
+		//Debug::Log("Y=");
+		//Debug::Log(XMVectorGetY(move), true);
+		//Debug::Log("Z=");
+		//Debug::Log(XMVectorGetZ(move), true);
 
 		//XMMATRIX rot = XMMatrixRotationY(XM_PIDIV2);
 		//XMVECTOR modifiedVec = XMPlaneTransform(move, rot);

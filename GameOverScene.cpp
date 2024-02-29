@@ -10,7 +10,7 @@ GameOverScene::GameOverScene(GameObject* parent)
 
 void GameOverScene::Initialize()
 {
-	hImage_ = Image::Load("GAME OVER.png");
+	hImage_ = Image::Load("GAME-OVER.png");
 	assert(hImage_ >= 0);
 }
 

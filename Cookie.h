@@ -1,16 +1,18 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-
-
 //テストシーンを管理するクラス
-class PlayScene : public GameObject
+class Cookie : public GameObject
 {
+
+	int hModel_;
 
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	PlayScene(GameObject* parent);
+	Cookie(GameObject* parent);
+
+	~Cookie();
 
 	//初期化
 	void Initialize() override;
@@ -23,4 +25,8 @@ public:
 
 	//開放
 	void Release() override;
+
+	//何かに当たった
+	//引数：pTarget 当たった相手
+	void OnCollision(GameObject* pTarget) override;
 };

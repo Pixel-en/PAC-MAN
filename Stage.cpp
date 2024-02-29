@@ -93,6 +93,7 @@ void Stage::Initialize()
 
 	Camera::SetPosition({ 6.5, 10, -5 });
 	Camera::SetTarget({ 6.5, 0, 5.5 });
+	floorval_ = 0;
 
 }
 
@@ -152,4 +153,23 @@ void Stage::Release()
 		map[i].clear();
 	}
 	map.clear();
+}
+
+int Stage::GetFloorValue()
+{
+	for (int z = 0; z < stageHeight_; z++) {
+		for (int x = 0; x < stageWidth_; x++) {
+			if (map[z][x] == 0)
+				floorval_++;
+		}
+	}
+
+	return floorval_;
+}
+
+bool Stage::IsFloor(int _x, int _y)
+{
+	if (map[14-_y][_x] == 0)
+		return true;
+	return false;
 }
